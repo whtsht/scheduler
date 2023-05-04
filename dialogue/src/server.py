@@ -1,64 +1,30 @@
-from flask import Flask, request, abort, Blueprint
-from linebot import LineBotApi, WebhookHandler
-from linebot.exceptions import InvalidSignatureError
-from linebot.models import (
-    MessageEvent,
-    TextMessage,
-    TextSendMessage,
-)
-from src.secret import (
-    CHANNEL_ACCESS_TOKEN,
-    CHANNEL_SECRET,
-)
-from src.main import main
-
+from flask import Flask
+from enum import Enum
 from src.db_models import db
+from line_bot import line
+from web import web
+import logging
 
 
-app = Flask(__name__)
+class Mode(Enum):
+    Prod = (1,)
+    Dev = (2,)
 
 
-def config_dev():
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
-    db.init_app(app)
-    db.create_all()
+def create_app(mode: Mode):
+    app = Flask(__name__)
+    if mode == Mode.Dev:
+        logging.basicConfig(level=logging.INFO)
+        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
+    else:
+        logging.basicConfig(level=logging.ERROR)
+        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.db"
 
+    with app.app_context():
+        db.init_app(app)
+        db.create_all()
 
-def config_prod():
-    pass
+    app.register_blueprint(line)
+    app.register_blueprint(web)
 
-
-@app.route("/", methods=["GET"])
-def hello():
-    return "hello :)"
-
-
-line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
-handler = WebhookHandler(CHANNEL_SECRET)
-
-
-@app.route("/callback", methods=["POST"])
-def callback():
-    # get X-Line-Signature header value
-    signature = request.headers["X-Line-Signature"]
-
-    # get request body as text
-    body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
-
-    # handle webhook body
-    try:
-        handler.handle(body, signature)
-    except InvalidSignatureError:
-        print(
-            "Invalid signature. Please check your channel access token/channel secret."
-        )
-        abort(400)
-
-    return "OK"
-
-
-@handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    response = main(event.message.text, event.source.user_id)
-    line_bot_api.reply_message(event.reply_token, TextSendMessage(text=response))
+    return app

@@ -4,6 +4,9 @@ WORKDIR /app
 
 ADD ./lib/sas /app
 
+RUN apt -y update \
+    && apt -y install  libmecab-dev
+
 RUN cargo build --release --bin=cli
 
 
@@ -15,7 +18,7 @@ ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-RUN apt-get update \
+RUN apt update \
     && groupadd --gid $USER_GID $USERNAME \
     && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
     && apt-get install -y sudo \
