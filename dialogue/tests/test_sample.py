@@ -8,14 +8,20 @@ from src.main import main
 @pytest.fixture(scope="session")
 def app():
     app = create_app(Mode.Dev)
-
-    # 開始処理
     app.app_context().push()
 
     yield app
 
-    # 終了処理
     db.drop_all()
+
+
+# 1テスト毎にテーブル内のデータを削除
+@pytest.fixture(scope="function", autouse=True)
+def session():
+    yield db.session
+
+    db.session.query(Plan).delete()
+    db.session.commit()
 
 
 @pytest.fixture()
@@ -45,9 +51,9 @@ def test_valid_add():
     assert len(plans) == 1
 
 
-# def test_search():
-#    result = main("5月12日16時30分にバイトがある", mockUserId)
-#    assert "予定を追加しました" == result
-#
-#    result = main("5/12 16:30 予定 検索", mockUserId)
-#    assert "バイトがあります" == result
+def test_search():
+    result = main("5月12日16時30分にバイトがある", mockUserId)
+    assert "予定を追加しました" == result
+
+    result = main("5月12日16時30分 予定 検索", mockUserId)
+    assert "バイトがあります" == result
