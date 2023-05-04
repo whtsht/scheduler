@@ -1,7 +1,0 @@
-services:
-  app:
-    build: .
-    restart: always
-    volumes:
-      - ../:/app:cached
-    tty: true
