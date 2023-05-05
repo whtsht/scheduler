@@ -1,8 +1,8 @@
-use sentence_analysis::date_time::{date, get_date_time, time, Date, DateTime, Time};
+use sentence_analysis::date_time::{date_parser, get_date_time, time_parser, Date, DateTime, Time};
 #[test]
 fn date_test() {
     assert_eq!(
-        date("5月12日"),
+        date_parser("5月12日"),
         Ok((
             "",
             Date {
@@ -13,7 +13,7 @@ fn date_test() {
         ))
     );
     assert_eq!(
-        date("６月７日"),
+        date_parser("６月７日"),
         Ok((
             "",
             Date {
@@ -24,7 +24,7 @@ fn date_test() {
         ))
     );
     assert_eq!(
-        date("五月十二日"),
+        date_parser("五月十二日"),
         Ok((
             "",
             Date {
@@ -35,7 +35,7 @@ fn date_test() {
         ))
     );
     assert_eq!(
-        date("11/11"),
+        date_parser("11/11"),
         Ok((
             "",
             Date {
@@ -50,7 +50,7 @@ fn date_test() {
 #[test]
 fn time_test() {
     assert_eq!(
-        time("8:30"),
+        time_parser("8:30"),
         Ok((
             "",
             Time {
@@ -60,7 +60,7 @@ fn time_test() {
         ))
     );
     assert_eq!(
-        time("五時五十九分"),
+        time_parser("五時五十九分"),
         Ok((
             "",
             Time {

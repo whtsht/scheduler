@@ -6,7 +6,9 @@ use nom::{
     sequence::{preceded, terminated, tuple},
     IResult,
 };
+use once_cell::sync::Lazy;
 use serde::Serialize;
+use std::collections::HashSet;
 
 #[derive(Debug, Serialize, PartialEq, Eq)]
 pub struct Date {
@@ -19,6 +21,10 @@ impl Date {
     fn new(year: Option<u16>, month: Option<u8>, day: Option<u8>) -> Self {
         Self { year, month, day }
     }
+
+    fn is_none(&self) -> bool {
+        self.year.is_none() && self.month.is_none() && self.day.is_none()
+    }
 }
 
 #[derive(Debug, Serialize, PartialEq, Eq)]
@@ -30,6 +36,10 @@ pub struct Time {
 impl Time {
     fn new(hour: Option<u8>, minute: Option<u8>) -> Self {
         Self { hour, minute }
+    }
+
+    fn is_none(&self) -> bool {
+        self.hour.is_none() && self.minute.is_none()
     }
 }
 
@@ -229,7 +239,7 @@ fn get_day(offset: u8) -> Date {
     )
 }
 
-pub fn date(input: &str) -> IResult<&str, Date> {
+pub fn date_parser(input: &str) -> IResult<&str, Date> {
     alt((
         alt((
             // 今日
@@ -263,7 +273,15 @@ pub fn date(input: &str) -> IResult<&str, Date> {
     ))(input)
 }
 
-pub fn time(input: &str) -> IResult<&str, Time> {
+#[test]
+fn test_date_parser() {
+    assert_eq!(
+        date_parser("2/15"),
+        Ok(("", Date::new(None, Some(2), Some(15))))
+    );
+}
+
+pub fn time_parser(input: &str) -> IResult<&str, Time> {
     alt((
         alt((
             // X:XX
@@ -284,17 +302,79 @@ pub fn time(input: &str) -> IResult<&str, Time> {
     ))(input)
 }
 
-fn snd<A, B>((_, b): (A, B)) -> B {
-    b
+#[test]
+fn test_time_parser() {
+    assert_eq!(time_parser("3:3"), Ok(("", Time::new(Some(3), Some(3)))));
+}
+
+fn csv_to_vec(s: &str) -> Vec<&str> {
+    s.split(|c| c == ',' || c == ' ' || c == '\n').collect()
+}
+
+pub fn time_word(s: &str) -> bool {
+    static WORD: Lazy<HashSet<&str>> = Lazy::new(|| {
+        let csv = include_str!("../time_word.csv");
+        HashSet::from_iter(csv_to_vec(csv).into_iter())
+    });
+    WORD.contains(s)
+}
+
+pub fn split_time_word(input: &str) -> Vec<&str> {
+    let words = input
+        .split(|c: char| !time_word(&c.to_string()))
+        .collect::<Vec<_>>();
+    words.into_iter().filter(|s| s.len() > 0).collect()
+}
+
+#[test]
+fn test_split_time_word() {
+    assert_eq!(split_time_word("2/15 16:30"), vec!["2/15", "16:30"])
+}
+
+pub fn date_time_parser(input: &str) -> IResult<&str, (Date, Time)> {
+    alt((
+        tuple((date_parser, time_parser)),
+        map(tuple((time_parser, date_parser)), |(time, date)| {
+            (date, time)
+        }),
+    ))(input)
 }
 
 pub fn get_date_time(input: &str) -> DateTime {
-    snd(alt((
-        map(tuple((date, time)), |(date, time)| DateTime { date, time }),
-        map(tuple((time, date)), |(time, date)| DateTime { date, time }),
-        map(tag(""), |_| {
-            DateTime::new(Date::new(None, None, None), Time::new(None, None))
-        }),
-    ))(input)
-    .unwrap())
+    let list = split_time_word(input);
+    let mut date = Date::new(None, None, None);
+    let mut time = Time::new(None, None);
+    for word in list {
+        match date_time_parser(word) {
+            Ok((_, (date, time))) if !date.is_none() && !time.is_none() => {
+                return DateTime::new(date, time);
+            }
+            _ => {}
+        }
+        match date_parser(word) {
+            Ok((_, d)) if !d.is_none() => {
+                date = d;
+                continue;
+            }
+            _ => {}
+        }
+        match time_parser(word) {
+            Ok((_, t)) if !t.is_none() => {
+                time = t;
+            }
+            _ => {}
+        }
+    }
+    DateTime::new(date, time)
+}
+
+#[test]
+fn test_get_date_time() {
+    assert_eq!(
+        get_date_time("2/15の16:30"),
+        DateTime::new(
+            Date::new(None, Some(2), Some(15)),
+            Time::new(Some(16), Some(30))
+        )
+    )
 }

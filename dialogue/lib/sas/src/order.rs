@@ -1,4 +1,4 @@
-use crate::date_time::{get_date_time, DateTime, Time};
+use crate::date_time::{get_date_time, time_word, DateTime, Time};
 use mecab::Tagger;
 use once_cell::sync::Lazy;
 use serde::{Deserialize, Serialize};
@@ -51,7 +51,6 @@ pub fn request(input: &str) -> String {
 pub fn request_all(input: &str) -> Response {
     let mut tagger = Tagger::new("-d /var/unidic");
 
-    let mut time = String::new();
     let mut noun = Vec::new();
     let mut verb = Vec::new();
     for node in tagger.parse_to_node(input).iter_next() {
@@ -61,14 +60,14 @@ pub fn request_all(input: &str) -> Response {
             _ => {
                 let word = &(node.surface)[..(node.length as usize)];
                 if time_word(word) {
-                    time.push_str(word);
-                } else {
-                    if &node.feature[0..6] == "名詞" {
-                        noun.push(String::from(word));
-                    }
-                    if &node.feature[0..6] == "動詞" {
-                        verb.push(String::from(node.feature.split(",").nth(7).unwrap()));
-                    }
+                    continue;
+                }
+
+                if &node.feature[0..6] == "名詞" {
+                    noun.push(String::from(word));
+                }
+                if &node.feature[0..6] == "動詞" {
+                    verb.push(String::from(node.feature.split(",").nth(7).unwrap()));
                 }
             }
         }
@@ -79,7 +78,7 @@ pub fn request_all(input: &str) -> Response {
     let response = Response {
         title: (&words != "" && &words != "予定").then(|| words),
         operation,
-        date_time: get_date_time(&time),
+        date_time: get_date_time(&input),
     };
 
     response
@@ -135,20 +134,6 @@ fn operation(noun: Vec<String>, verb: Vec<String>) -> (String, Option<Operation>
     let mut rest = String::new();
     rest.extend(noun.into_iter());
     (rest, Some(Operation::Add))
-}
-
-fn csv_to_vec(s: &str) -> Vec<&str> {
-    s.split(|c| c == ',' || c == ' ' || c == '\n').collect()
-}
-
-pub fn time_word(s: &str) -> bool {
-    static WORD: Lazy<HashSet<&str>> = Lazy::new(|| {
-        let csv = include_str!("../time_word.csv");
-        HashSet::from_iter(
-            csv_to_vec(csv).into_iter(),
-        )
-    });
-    WORD.contains(s)
 }
 
 fn refer_word(s: &str) -> bool {
