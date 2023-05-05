@@ -2,7 +2,7 @@ from src.server import Mode, create_app
 from src.db_models import db
 import pytest
 from src.db_models import Plan
-from src.main import main
+from plan.main import main
 
 
 @pytest.fixture(scope="session")
