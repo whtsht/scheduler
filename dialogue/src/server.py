@@ -28,3 +28,11 @@ def create_app(mode: Mode):
     app.register_blueprint(web)
 
     return app
+
+
+def create_prod_app():
+    return create_app(Mode.Prod)
+
+
+def create_dev_app():
+    return create_app(Mode.Dev)

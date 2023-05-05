@@ -47,7 +47,7 @@ def test_invalid_add():
 def test_valid_add():
     result = main("5月12日16時30分にバイトがある", mockUserId)
     assert "予定を追加しました" == result
-    plans = db.session.query(Plan).filter(Plan.title == "バイト").all()
+    plans = db.session.query(Plan).filter(Plan.user_id == mockUserId).all()
     assert len(plans) == 1
 
 
@@ -55,5 +55,17 @@ def test_search():
     result = main("5月12日16時30分にバイトがある", mockUserId)
     assert "予定を追加しました" == result
 
-    result = main("5月12日16時30分 予定 検索", mockUserId)
+    result = main("5/12 16:30 検索", mockUserId)
     assert "バイトがあります" == result
+
+
+def test_remove():
+    result = main("5月12日16時30分にバイトがある", mockUserId)
+    assert "予定を追加しました" == result
+    plans = db.session.query(Plan).filter(Plan.user_id == mockUserId).all()
+    assert len(plans) == 1
+
+    result = main("バイトの予定消して", mockUserId)
+    assert "「バイト」の予定を削除しました"
+    plans = db.session.query(Plan).filter(Plan.user_id == mockUserId).all()
+    assert len(plans) == 0

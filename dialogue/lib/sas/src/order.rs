@@ -37,7 +37,8 @@ pub fn to_string<T: Serialize>(t: T) -> String {
 }
 
 pub fn request(input: &str) -> String {
-    if let Ok(req) = serde_json::from_str::<Request>(input) {
+    let input = input.replace("\n", "");
+    if let Ok(req) = serde_json::from_str::<Request>(&input) {
         match req.request_type {
             RequestType::All => to_string(request_all(&req.value)),
             RequestType::Time => to_string(request_time(&req.value)),

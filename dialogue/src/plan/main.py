@@ -1,5 +1,5 @@
 from src.sas import get_pre_plan, OP
-from src.plan import add, search
+from src.plan import add, search, remove
 
 
 def main(message: str, user_id: str) -> str:
@@ -8,5 +8,7 @@ def main(message: str, user_id: str) -> str:
         return add.from_message(user_id, res)
     if res.operation == OP.Refer:
         return search.from_message(user_id, res)
+    if res.operation == OP.Remove:
+        return remove.from_message(user_id, res)
 
     return "無効な入力です"
