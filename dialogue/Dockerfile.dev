@@ -45,5 +45,5 @@ ENV PYTHONPATH $PYTHONPATH:/app/src
 ENV PATH $PATH:/home/vscode/.local/bin
 
 RUN pip install --upgrade pip
-RUN pip install flake8 black
-RUN pip install flask line-bot-sdk Flask-SQLAlchemy pytest
+RUN pip install flake8 black pytest 
+RUN pip install flask line-bot-sdk Flask-SQLAlchemy Flask-APScheduler

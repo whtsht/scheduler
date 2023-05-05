@@ -29,3 +29,4 @@ def from_form(
 
     db.session.add(plan)
     db.session.commit()
+

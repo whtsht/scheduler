@@ -9,6 +9,6 @@ def from_message(user_id: str, input: PrePlan) -> str:
             .filter(Plan.user_id == user_id and Plan.time.day == day)
             .first()
         )
-        return plan.title + "があります"
+        return "「" + plan.title + "」があります"
 
-    return "検索: 日付を指定してください"
+    return "日付を指定してください"

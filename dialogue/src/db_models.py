@@ -8,7 +8,7 @@ db = SQLAlchemy()
 class Plan(db.Model):
     __tablename__ = "plans"
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.String(100), nullable=False, unique=True)
+    user_id = db.Column(db.String(100), nullable=False)
     title = db.Column(db.String(100), nullable=False)
     time = db.Column(db.DateTime, nullable=False)
     notification = db.Column(db.DateTime, nullable=True)
