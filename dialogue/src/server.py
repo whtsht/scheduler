@@ -3,6 +3,7 @@ from enum import Enum
 from src.db_models import db
 from line_bot import line
 from web import web
+from src.plan.notif import sched
 import logging
 
 
@@ -23,6 +24,8 @@ def create_app(mode: Mode):
     with app.app_context():
         db.init_app(app)
         db.create_all()
+
+    sched.start()
 
     app.register_blueprint(line)
     app.register_blueprint(web)

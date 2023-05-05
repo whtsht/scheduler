@@ -1,7 +1,7 @@
 from src.sas import StrictDateTime, PrePlan
 from src.plan.date import check_date_time
 from src.db_models import db, Plan
-from flask import current_app
+from src.plan.notif import add_notification
 
 
 def from_message(user_id: str, input: PrePlan) -> str:
@@ -18,7 +18,8 @@ def from_message(user_id: str, input: PrePlan) -> str:
                 return "「" + title + "」は同じ時間に既に追加されています"
 
             from_form(title, user_id, st_time, st_time)
-            return "「" + title + "」を追加しました"
+            add_notification(user_id, title, st_time.into())
+            return str(st_time.into()) + "に「" + title + "」を追加しました"
     return "日付とタイトルを指定してください"
 
 

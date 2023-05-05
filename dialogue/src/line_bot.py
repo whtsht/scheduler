@@ -1,4 +1,4 @@
-from flask import request, abort, Blueprint, current_app
+from flask import request, abort, Blueprint
 from plan.main import main
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
