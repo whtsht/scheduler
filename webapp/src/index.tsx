@@ -1,14 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import liff from '@line/liff';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import liff from "@line/liff";
+import { liffId } from "./secret";
 
-
-liff
-    .init({ liffId: '1660970678-BY6n29Ll' })
+liff.init({ liffId: liffId })
     .then(() => {
         const root = ReactDOM.createRoot(
-            document.getElementById('root') as HTMLElement
+            document.getElementById("root") as HTMLElement
         );
         root.render(
             <React.StrictMode>
@@ -17,6 +16,5 @@ liff
         );
     })
     .catch((e) => {
-        alert(`LIFF error: ${e.message}`)
-    })
-
+        alert(`LIFF error: ${e.message}`);
+    });

@@ -1,69 +1,32 @@
 import liff from "@line/liff";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import "@fontsource/roboto/400.css";
+import LoggedIn from "./components/Contents/LoggedIn";
+import LoggedOut from "./components/Contents/LoggedOut";
+import { CssBaseline } from "@mui/material";
+import Header from "./components/Header";
 
-const color = { line: "#00D816" };
+const COLOR = { line: "#00D816" };
+
+function isLoggedIn(): boolean {
+    // let ret = false;
+    // try {
+    //     ret = liff.isLoggedIn();
+    // } catch (e) {
+    //     console.log(e);
+    // }
+    // return ret;
+    return true;
+}
 
 function App() {
-    let isLoggedIn = false;
-    try {
-        isLoggedIn = liff.isLoggedIn();
-    } catch (e) {
-        console.log(e);
-    }
-    if (isLoggedIn) {
-        const token = liff.getDecodedIDToken();
-        return (
-            <Grid
-                container
-                direction="column"
-                alignItems="center"
-                justifyContent="space-evenly"
-                style={{ minHeight: "100vh" }}
-            >
-                <Grid item>
-                    <h1 style={{ textAlign: "center" }}>
-                        こんにちは {token?.name} さん
-                    </h1>
-                </Grid>
-                <Grid item>
-                    <Button
-                        variant="contained"
-                        sx={{ fontSize: 20, fontWeight: "bold" }}
-                        onClick={() => {
-                            liff.logout();
-                            window.location.reload();
-                        }}
-                    >
-                        ログアウト
-                    </Button>
-                </Grid>
-            </Grid>
-        );
-    } else {
-        return (
-            <Grid
-                container
-                spacing={3}
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-                style={{ minHeight: "100vh" }}
-            >
-                <Grid item>
-                    <Button
-                        variant="contained"
-                        style={{ backgroundColor: color.line }}
-                        sx={{ fontSize: 20, fontWeight: "bold" }}
-                        onClick={() => liff.login({})}
-                    >
-                        Lineアカウントでログイン
-                    </Button>
-                </Grid>
-            </Grid>
-        );
-    }
+    const Scene = isLoggedIn() ? <LoggedIn /> : <LoggedOut />;
+
+    return (
+        <CssBaseline>
+            <Header />
+            {Scene}
+        </CssBaseline>
+    );
 }
 
 export default App;
+export { COLOR, isLoggedIn };
