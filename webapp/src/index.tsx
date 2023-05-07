@@ -4,6 +4,7 @@ import App from "./App";
 import liff from "@line/liff";
 import { liffId } from "./secret";
 import "../src/index.css";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 liff.init({ liffId: liffId })
     .then(() => {
@@ -12,7 +13,15 @@ liff.init({ liffId: liffId })
         );
         root.render(
             <React.StrictMode>
-                <App />
+                <HelmetProvider>
+                    <Helmet>
+                        <link
+                            rel="stylesheet"
+                            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+                        />
+                    </Helmet>
+                    <App />
+                </HelmetProvider>
             </React.StrictMode>
         );
     })

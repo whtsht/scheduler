@@ -65,7 +65,6 @@ function FullScreenButton({ handle }: { handle: FullScreenHandle }) {
 }
 
 function Header({ handle }: { handle: FullScreenHandle }) {
-    console.log(window.matchMedia("(display-mode: standalone)").matches);
     const Button = isLoggedIn() ? <LogOutButton /> : <LogInButton />;
     return (
         <Box sx={{ flexGrow: 1 }}>

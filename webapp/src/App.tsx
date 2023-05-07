@@ -2,7 +2,6 @@
 import LoggedIn from "./components/Contents/LoggedIn";
 import LoggedOut from "./components/Contents/LoggedOut";
 import { CssBaseline } from "@mui/material";
-import Header from "./components/Header";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 const COLOR = { line: "#00D816" };
@@ -24,10 +23,7 @@ function App() {
 
     return (
         <FullScreen handle={handle}>
-            <CssBaseline>
-                <Header handle={handle} />
-                {Scene}
-            </CssBaseline>
+            <CssBaseline>{Scene}</CssBaseline>
         </FullScreen>
     );
 }
