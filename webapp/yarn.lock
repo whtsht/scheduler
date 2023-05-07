@@ -1346,6 +1346,28 @@
   resolved "https://registry.yarnpkg.com/@fontsource/roboto/-/roboto-4.5.8.tgz#56347764786079838faf43f0eeda22dd7328437f"
   integrity sha512-CnD7zLItIzt86q4Sj3kZUiLcBk1dSk81qcqgMGaZe7SQ1P8hFNxhMl5AZthK1zrDM5m74VVhaOpuMGIL4gagaA==
 
+"@fullcalendar/core@^6.1.6":
+  version "6.1.6"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/core/-/core-6.1.6.tgz#dba14c2e5a48044b7e932b0bcb20144b3699485c"
+  integrity sha512-Q/3pWgOv7qr/eVpuDz+05jxJZSg7Fdwh4XgQP8DlJFLp5aLlOiiKdkTUIO1BX7clQtYTm8P0v7FqMKbsFiQInw==
+  dependencies:
+    preact "~10.12.1"
+
+"@fullcalendar/daygrid@^6.1.6":
+  version "6.1.6"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/daygrid/-/daygrid-6.1.6.tgz#b60c88ad686b2546daa7eb7ef2369996d14753d2"
+  integrity sha512-HKxprePWXRyg1Shn7p0CWgggFZVwvs+Pg0Z9uSvx6a58wP1yTbOoJHhSVv5CDsfjnq1a0y6DsJbPP/V2LDl6bg==
+
+"@fullcalendar/interaction@^6.1.6":
+  version "6.1.6"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/interaction/-/interaction-6.1.6.tgz#9fe3f84a0b62e37013a5d842c8173fd5f72eb39a"
+  integrity sha512-6TjKbDHOkF3C9hIzIhxiTX5FCmNcaCeRk5CeKXHZiIi1Y8gQwIkUkwcZps5uj7PIvb3wNVw8FbF+RNRoloPUqQ==
+
+"@fullcalendar/react@^6.1.6":
+  version "6.1.6"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/react/-/react-6.1.6.tgz#2fc0161bdc79aaa3cece12189bd87ea926abff33"
+  integrity sha512-Ib1jl+4SwlyzM5JsVkhBEoB45hL11sQaN9O600XAa39lK2vSL4d0+ZTBSsBBdmezcHd/iECFk64jS0e3agGPVg==
+
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.8.tgz#03595ac2075a4dc0f191cc2131de14fbd7d410b9"
@@ -2286,6 +2308,18 @@
     "@types/react-is" "^16.7.1 || ^17.0.0"
     prop-types "^15.8.1"
     react-is "^18.2.0"
+
+"@mui/x-date-pickers@^6.3.1":
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/@mui/x-date-pickers/-/x-date-pickers-6.3.1.tgz#afe5b20be9f7da01f1cd51c7e9a5d95269c162ab"
+  integrity sha512-YPQrsi10rpeEUJkp77NkHqkcZbzAAWITl3MZJ8Mv8ZiS9MEFKmr2kU+SPWUomDByor2UlaS9EmvtslQW74hiWg==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
+    "@mui/utils" "^5.12.3"
+    "@types/react-transition-group" "^4.4.5"
+    clsx "^1.2.1"
+    prop-types "^15.8.1"
+    react-transition-group "^4.4.5"
 
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"
@@ -4326,6 +4360,11 @@ data-urls@^2.0.0:
     abab "^2.0.3"
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
+
+dayjs@^1.11.7:
+  version "1.11.7"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.7.tgz#4b296922642f70999544d1144a2c25730fce63e2"
+  integrity sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==
 
 debug@2.6.9, debug@^2.6.0:
   version "2.6.9"
@@ -7171,6 +7210,11 @@ mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.6"
 
+moment@^2.29.4:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -8166,6 +8210,11 @@ postcss@^8.0.9, postcss@^8.3.5, postcss@^8.4.19, postcss@^8.4.4:
     nanoid "^3.3.6"
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
+
+preact@~10.12.1:
+  version "10.12.1"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.12.1.tgz#8f9cb5442f560e532729b7d23d42fd1161354a21"
+  integrity sha512-l8386ixSsBdbreOAkqtrwqHwdvR35ID8c3rKPa8lCWuO86dBi32QWHV4vfsZK1utLLFMvw+Z5Ad4XLkZzchscg==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
