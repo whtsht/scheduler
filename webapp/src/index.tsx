@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import liff from "@line/liff";
 import { liffId } from "./secret";
+import "../src/index.css";
 
 liff.init({ liffId: liffId })
     .then(() => {

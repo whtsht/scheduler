@@ -1,55 +1,61 @@
 import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
 import allLocales from "@fullcalendar/core/locales-all";
 import interactionPlugin from "@fullcalendar/interaction";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import listPlugin from "@fullcalendar/list";
+import Container from "@mui/material/Container";
 
 function LoggedIn() {
-    const initialView = "dayGridMonth";
     const INITIAL_EVENTS = [
         {
             id: "id",
-            title: "my event",
-            start: "2023-05-10",
+            title: "バイト",
+            start: "2023-05-07T16:00:00",
             color: "#000",
+        },
+        {
+            id: "id",
+            title: "資格試験",
+            start: "2023-05-10T12:30:00",
+            color: "red",
         },
     ];
 
     return (
-        <div
-            style={{
-                width: "100vw",
-                alignItems: "center",
-            }}
-        >
-            <div
-                style={{
-                    display: "inline-block",
-                    width: "90vw",
-                    margin: "5vw",
+        <Container>
+            <FullCalendar
+                plugins={[dayGridPlugin, interactionPlugin, listPlugin]}
+                views={{
+                    dayGridMonthNoTime: {
+                        type: "dayGridMonth",
+                        displayEventTime: false,
+                    },
                 }}
-            >
-                <FullCalendar
-                    headerToolbar={{
-                        start: "title",
-                        center: "",
-                        end: "today",
-                    }}
-                    plugins={[dayGridPlugin, interactionPlugin]}
-                    height="80vh"
-                    initialView={initialView}
-                    initialEvents={INITIAL_EVENTS}
-                    locales={allLocales}
-                    locale="ja"
-                    titleFormat={{
-                        month: "short",
-                        year: "numeric",
-                    }}
-                    dayCellContent={(e) => {
-                        return e.dayNumberText.replace("日", "");
-                    }}
-                />
-            </div>
-        </div>
+                headerToolbar={{
+                    start: "prev,title,next",
+                    center: "",
+                    end: "dayGridMonthNoTime,listMonth",
+                }}
+                height="85vh"
+                eventClick={(_) => {}}
+                moreLinkClick={() => alert("clicked")}
+                displayEventTime={true}
+                initialView={"dayGridMonthNoTime"}
+                initialEvents={INITIAL_EVENTS}
+                locales={allLocales}
+                locale="ja"
+                titleFormat={{
+                    month: "short",
+                    year: "numeric",
+                }}
+                dayCellContent={(e) => {
+                    return e.dayNumberText.replace("日", "");
+                }}
+                buttonText={{
+                    list: "リスト",
+                }}
+            />
+        </Container>
     );
 }
 
