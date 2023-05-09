@@ -26,3 +26,4 @@ ENV TZ Asia/Tokyo
 ENV TERM xterm
 ENV PYTHONPATH $PYTHONPATH:/app/src
 ENV PATH $PATH:/home/vscode/.local/bin
+ENV APP_SERVER http://app-server:5000
