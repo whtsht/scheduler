@@ -1,12 +1,12 @@
 services:
   app:
-    container_name: app-server-container
-    hostname: app-server
+    container_name: web-server-container
+    hostname: web-server
     build:
       context: ..
       dockerfile: Dockerfile.dev
     ports:
-      - "5000:5000"
+      - "3000:3000"
     restart: always
     volumes:
       - ../:/app:cached

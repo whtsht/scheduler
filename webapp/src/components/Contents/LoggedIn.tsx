@@ -5,21 +5,16 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
 import Grid from "@mui/material/Grid";
 import { useEffect } from "react";
+import { EventInput } from "@fullcalendar/core";
 
 function LoggedIn() {
-    const INITIAL_EVENTS = [
-        {
-            id: "id",
-            title: "バイト",
-            start: "2023-05-07T16:00:00",
-            color: "#000",
-        },
-        {
-            id: "id",
-            title: "資格試験",
-            start: "2023-05-10T12:30:00",
-            color: "red",
-        },
+    const INITIAL_EVENTS: EventInput[] = [
+       // {
+       //     id: "id",
+       //     title: "資格試験",
+       //     start: "2023-05-10T12:30:00",
+       //     color: "red",
+       // },
     ];
     useEffect(() => {
         const setIcon = (name: string, icon: string) => {
@@ -30,7 +25,15 @@ function LoggedIn() {
         };
         setIcon("user", "person");
         setIcon("month", "calendar_month");
-        setIcon("listMonth", "list");
+        setIcon("list", "list");
+    }, []);
+
+    useEffect(() => {
+        (async () => {
+            const ret = await fetch("/web/hello");
+            const text = await ret.text();
+            console.log(text);
+        })();
     }, []);
 
     return (
@@ -54,12 +57,29 @@ function LoggedIn() {
                         month: {
                             type: "dayGridMonth",
                             displayEventTime: false,
+                            titleFormat: (date) => {
+                                return (
+                                    date.start.year.toString() +
+                                    "/" +
+                                    date.start.month.toString()
+                                );
+                            },
+                        },
+                        list: {
+                            type: "listMonth",
+                            titleFormat: (date) => {
+                                return (
+                                    date.start.year.toString() +
+                                    "/" +
+                                    date.start.month.toString()
+                                );
+                            },
                         },
                     }}
                     headerToolbar={{
-                        start: "title",
-                        center: "",
-                        end: "month,listMonth,user",
+                        start: "",
+                        center: "prev,title,next",
+                        end: "month,list,user",
                     }}
                     customButtons={{
                         user: {

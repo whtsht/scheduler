@@ -3,6 +3,7 @@ from src.db_models import db
 import pytest
 from src.db_models import Plan
 from plan.main import main
+from src.plan.notif import sched
 
 
 @pytest.fixture(scope="session")
@@ -15,13 +16,19 @@ def app():
     db.drop_all()
 
 
-# 1テスト毎にテーブル内のデータを削除
+# 1テスト毎に実行
 @pytest.fixture(scope="function", autouse=True)
 def session():
     yield db.session
 
+    # テーブル内のデータを全て削除
     db.session.query(Plan).delete()
     db.session.commit()
+
+    # スケジュールを全て削除
+    jobs = sched.get_jobs()
+    for job in jobs:
+        job.remove()
 
 
 @pytest.fixture()
@@ -30,7 +37,7 @@ def client(app):
 
 
 def test_flask_simple(client):
-    result = client.get("/")
+    result = client.get("/web/hello")
     assert b"hello :)" == result.data
 
 

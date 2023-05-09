@@ -22,12 +22,12 @@ code {
 }
 .fc .fc-toolbar-title {
     font-size: 3vh;
+    vertical-align: middle;
     color: #37362f;
     display: inline;
-    margin-left: 5vw;
 }
 .fc .fc-button-primary {
-    font-size: 3vh;
+    font-size: 2.5vh;
     background-color: #ffffff00;
     color: #acaba9;
     border: none;
@@ -60,4 +60,9 @@ code {
 }
 .fc-scroller {
     overflow-y: hidden !important;
+}
+.fc-toolbar-chunk:nth-of-type(2) {
+    position: absolute;
+    left: 50vw;
+    transform: translateX(-50%);
 }

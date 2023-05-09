@@ -1,9 +1,8 @@
-from flask import Blueprint, current_app
+from flask import Blueprint
 
-web = Blueprint("web", __name__)
+web = Blueprint("web", __name__, url_prefix="/web")
 
 
-@web.route("/", methods=["GET"])
+@web.route("/hello", methods=["GET"])
 def hello():
-    current_app.logger.info("hello")
     return "hello :)"

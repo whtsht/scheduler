@@ -25,6 +25,8 @@ def create_app(mode: Mode):
         db.init_app(app)
         db.create_all()
 
+    app.config["SCHEDULER_TIMEZONE"] = "Asia/Tokyo"
+    sched.init_app(app)
     sched.start()
 
     app.register_blueprint(line)
