@@ -1,14 +1,20 @@
-from src.sas import PrePlan
+from src.sas import PlanInfo
 from src.db_models import db, Plan
+from src.plan.main import UserState
 
 
-def from_message(user_id: str, input: PrePlan) -> str:
-    if day := input.date_time.date.day:
-        plan: Plan = (
-            db.session.query(Plan)
-            .filter(Plan.user_id == user_id and Plan.time.day == day)
-            .first()
-        )
-        return "「" + plan.title + "」があります"
+def from_message(line_id: str, plan_info: PlanInfo) -> list[Plan]:
+    """予定を検索する"""
+    # PlanInfoを使って予定を検索する
+    # 見つけられなかったら空の配列を返す
+    return []
 
-    return "日付を指定してください"
+
+# 検索情報が不足することを知らせる
+def uncomplited_message() -> str:
+    return ""
+
+
+# plan_listがからの場合はエラーを知らせる
+def complited_message(plan_info: PlanInfo, plan_list: list[Plan]) -> str:
+    return ""

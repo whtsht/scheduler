@@ -1,21 +1,8 @@
 from enum import Enum
 import subprocess
-from types import SimpleNamespace
 import json
 from typing import Optional
 from datetime import datetime
-
-
-class RequestType(Enum):
-    All = (1,)
-    Time = (2,)
-    Title = (3,)
-
-
-class Request:
-    def __init__(self, request_type: RequestType, value: str) -> None:
-        self.request_type = request_type
-        self.value = value
 
 
 class Date:
@@ -32,12 +19,29 @@ class Time:
 
 
 class DateTime:
+    """曖昧な時刻情報を格納する
+
+    例)
+        各要素が入っていない可能性がある
+        2023/05/15 XX:XX
+        XXXX/XX/XX XX:XX
+        XXXX/11/11 09:XX
+    """
+
     def __init__(self, date: Date, time: Time):
         self.date = date
         self.time = time
 
 
 class StrictDateTime:
+    """厳密な時刻情報を格納する
+
+    例)
+        分以外は指定する必要がある
+        2023/05/15 14:30
+        2023/11/11 09:XX
+    """
+
     def __init__(
         self, year: int, month: int, day: int, hour: int, minute: Optional[int] = None
     ):
@@ -48,6 +52,11 @@ class StrictDateTime:
         self.minute = minute
 
     def into(self) -> datetime:
+        """データベースに格納できるように値を変換
+
+        Returns:
+            datetime
+        """
         return datetime(
             self.year,
             self.month,
@@ -58,24 +67,74 @@ class StrictDateTime:
 
 
 class OP(Enum):
+    """操作
+    Add:
+        追加
+    Search:
+        検索
+    Modify:
+        修正
+    Remove:
+        削除
+    Snooze:
+        スヌーズ
+    """
+
     Add = (1,)
-    Refer = (2,)
+    Search = (2,)
     Modify = (3,)
     Remove = (4,)
+    Snooze = (5,)
 
 
-class PrePlan:
+class PlanInfo:
+    """予定情報
+    Attributes:
+        title (Optional[str]):
+            予定名
+        start_time (DateTime):
+            開始時刻
+    """
+
+    def __init__(self, title: Optional[str], start_time: DateTime):
+        self.title = title
+        self.start_time = start_time
+
+
+class InputInfo:
+    """入力情報
+    Attributes:
+        title (str):
+            予定名
+        op (OP):
+            操作
+        start_time (DateTime):
+            開始時刻
+
+    """
+
     def __init__(
-        self, title: Optional[str], operation: Optional[OP], date_time: DateTime
+        self,
+        title: Optional[str],
+        operation: Optional[OP],
+        start_time: DateTime,
     ) -> None:
         self.title = title
-        self.operation = operation
-        self.date_time = date_time
+        self.op = operation
+        self.start_time = start_time
+
+    def into_plan_info(self) -> PlanInfo:
+        """入力情報から予定情報への変換
+
+        Returns:
+            PlanInfo: 予定情報
+        """
+        return PlanInfo(self.title, self.start_time)
 
 
 def operation_from_str(s: Optional[str]) -> Optional[OP]:
     if s == "Refer":
-        return OP.Refer
+        return OP.Search
     if s == "Add":
         return OP.Add
     if s == "Modify":
@@ -101,15 +160,35 @@ def datetime_from_dict(json: dict[str, dict[str, Optional[int]]]) -> DateTime:
     )
 
 
-def response_from_dict(json) -> PrePlan:
-    return PrePlan(
+def response_from_dict(json) -> InputInfo:
+    return InputInfo(
         json["title"],
         operation_from_str(json["operation"]),
         datetime_from_dict(json["date_time"]),
     )
 
 
-def get_pre_plan(input: str) -> PrePlan:
+class RequestType(Enum):
+    All = (1,)
+    Time = (2,)
+    Title = (3,)
+
+
+class Request:
+    def __init__(self, request_type: RequestType, value: str) -> None:
+        self.request_type = request_type
+        self.value = value
+
+
+def get_input_info(input: str) -> InputInfo:
+    """文字列を入力情報に変換する
+
+    Args:
+        input (str): 入力文字列
+
+    Returns:
+        InputInfo: 予定情報
+    """
     cmd = "sas"
     ret = subprocess.check_output(
         [cmd, f'{{"request_type":"All","value":"{input}"}}'], encoding="utf-8"

@@ -1,32 +1,26 @@
-from src.sas import StrictDateTime, PrePlan
-from src.plan.date import check_date_time
+from src.sas import StrictDateTime, PlanInfo
 from src.db_models import db, Plan
-from src.plan.notif import add_notification
+from src.plan.main import UserState
+
+# 予定を追加するときは通知時間も記録する必要がある
+# なので開始時間を一旦ここに退避させる
+start_time_dict: dict[str, StrictDateTime] = {}
 
 
-def from_message(user_id: str, input: PrePlan) -> str:
-    if (datetime := input.date_time) and (title := input.title):
-        if st_time := check_date_time(datetime):
-            plan = (
-                db.session.query(Plan)
-                .filter(Plan.title == title)
-                .filter(Plan.user_id == user_id)
-                .filter(Plan.time == st_time.into())
-                .first()
-            )
-            if plan != None:
-                return "「" + title + "」は同じ時間に既に追加されています"
-
-            from_form(title, user_id, st_time, st_time)
-            add_notification(user_id, title, st_time.into())
-            return str(st_time.into()) + "に「" + title + "」を追加しました"
-    return "日付とタイトルを指定してください"
+# 予定名，開始時刻，通知時間が揃ったらデータベースに情報を追加してTrueを返す
+def from_message(line_id: str, plan_info: PlanInfo) -> bool:
+    """入力文字列から予定を追加する"""
+    return False
 
 
-def from_form(
-    title: str, user_id: str, time: StrictDateTime, notification: StrictDateTime
-):
-    plan = Plan(title, user_id, time, notification)
-
+def add_plan(plan: Plan):
     db.session.add(plan)
     db.session.commit()
+
+
+def uncomplited_message(plan_info: PlanInfo) -> str:
+    return ""
+
+
+def complited_message(plan_info: PlanInfo) -> str:
+    return ""
