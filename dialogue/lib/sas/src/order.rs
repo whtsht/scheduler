@@ -74,10 +74,10 @@ pub fn request_all(input: &str) -> Response {
         }
     }
 
-    let (words, operation) = operation(noun, verb);
+    let (word, operation) = get_word_op(noun, verb);
 
     let response = Response {
-        title: (&words != "" && &words != "予定").then(|| words),
+        title: (&word != "" && &word != "予定").then(|| word),
         operation,
         date_time: get_date_time(&input),
     };
@@ -111,7 +111,7 @@ pub fn request_title(input: &str) -> String {
     rest
 }
 
-fn operation(noun: Vec<String>, verb: Vec<String>) -> (String, Option<Operation>) {
+fn get_word_op(noun: Vec<String>, verb: Vec<String>) -> (String, Option<Operation>) {
     for op in noun.iter().chain(verb.iter()) {
         if remove_word(&op) {
             let mut rest = String::new();
