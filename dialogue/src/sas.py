@@ -72,8 +72,6 @@ class OP(Enum):
         追加
     Search:
         検索
-    Modify:
-        修正
     Remove:
         削除
     Snooze:
@@ -82,7 +80,6 @@ class OP(Enum):
 
     Add = (1,)
     Search = (2,)
-    Modify = (3,)
     Remove = (4,)
     Snooze = (5,)
 
@@ -137,8 +134,6 @@ def operation_from_str(s: Optional[str]) -> Optional[OP]:
         return OP.Search
     if s == "Add":
         return OP.Add
-    if s == "Modify":
-        return OP.Modify
     if s == "Remove":
         return OP.Remove
 
