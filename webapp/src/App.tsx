@@ -1,6 +1,6 @@
 //import liff from "@line/liff";
-import LoggedIn from "./components/Contents/LoggedIn";
-import LoggedOut from "./components/Contents/LoggedOut";
+import LoggedIn from "./components/LoggedIn";
+import LoggedOut from "./components/LoggedOut";
 import { CssBaseline } from "@mui/material";
 import ja from "dayjs/locale/ja";
 import dayjs from "dayjs";

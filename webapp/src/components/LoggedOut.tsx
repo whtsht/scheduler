@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import liff from "@line/liff";
-import { COLOR } from "../../App";
+import { COLOR } from "../App";
 
 function LoggedOut() {
     return (

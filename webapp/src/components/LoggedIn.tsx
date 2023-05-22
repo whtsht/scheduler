@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid";
 import { useEffect, useState } from "react";
 import PlanDialog from "./PlanDialog";
-import { Plan, RawPlan } from "../../plan";
+import { Plan, RawPlan } from "../plan";
 import Calendar from "./Calendar";
 import { EventInput } from "@fullcalendar/core";
 

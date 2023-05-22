@@ -4,7 +4,7 @@ import allLocales from "@fullcalendar/core/locales-all";
 import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
-import { toPlan, Plan } from "../../plan";
+import { toPlan, Plan } from "../plan";
 import { useEffect } from "react";
 
 function Calendar({
