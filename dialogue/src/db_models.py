@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from src.sas import StrictDateTime
+from src.info import StrictDateTime
 from typing import Optional
 from datetime import datetime
 

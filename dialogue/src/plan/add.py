@@ -1,4 +1,4 @@
-from src.sas import StrictDateTime, PlanInfo
+from src.info import StrictDateTime, PlanInfo
 from src.db_models import db, Plan
 
 # 予定を追加するときは通知時間も記録する必要がある

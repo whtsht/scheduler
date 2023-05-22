@@ -1,4 +1,5 @@
-from src.sas import get_input_info, OP, InputInfo, PlanInfo
+from src.sas import get_input_info
+from src.info import OP, PlanInfo, InputInfo
 from src.plan import add, search
 from db_models import Plan
 from typing import Optional

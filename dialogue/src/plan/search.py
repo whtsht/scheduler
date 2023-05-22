@@ -1,4 +1,4 @@
-from src.sas import PlanInfo
+from src.info import PlanInfo
 from src.db_models import db, Plan
 from src.plan.main import UserState
 
