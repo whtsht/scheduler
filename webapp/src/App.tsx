@@ -2,7 +2,11 @@
 import LoggedIn from "./components/Contents/LoggedIn";
 import LoggedOut from "./components/Contents/LoggedOut";
 import { CssBaseline } from "@mui/material";
+import ja from "dayjs/locale/ja";
+import dayjs from "dayjs";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+
+dayjs.locale(ja);
 
 const COLOR = { line: "#00D816" };
 

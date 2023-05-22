@@ -19,28 +19,21 @@ interface Plan {
     plan_id: string;
     title: string;
     detail: string;
-    notif_time: Date;
-    allDay: Date | null;
-    start: Date | null;
-    end: Date | null;
+    notif_time: string;
+    allDay: string | null;
+    start: string | null;
+    end: string | null;
 }
 
 function toPlan(info: EventClickArg): Plan {
-    const toDate = (date: null | string) => {
-        if (date !== null) {
-            return new Date(date);
-        } else {
-            return null;
-        }
-    };
     return {
         plan_id: info.event.id,
         title: info.event.title,
-        detail: info.event.extendedProps.ditail,
-        notif_time: new Date(info.event.extendedProps.notif_time),
-        allDay: toDate(info.event.extendedProps.allDay),
-        start: toDate(info.event.extendedProps.start),
-        end: toDate(info.event.extendedProps.end),
+        detail: info.event.extendedProps.detail,
+        notif_time: info.event.extendedProps.notif_time,
+        allDay: info.event.extendedProps.allDay,
+        start: info.event.extendedProps.start,
+        end: info.event.extendedProps.end,
     };
 }
 
