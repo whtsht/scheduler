@@ -1,4 +1,4 @@
-from src.sas import get_input_info, OP, DateTime, InputInfo, PlanInfo
+from src.sas import get_input_info, OP, InputInfo, PlanInfo
 from src.plan import add, search
 from db_models import Plan
 from typing import Optional
@@ -86,12 +86,13 @@ def gen_message(line_id) -> str:
                 if plan_list := state.plan_list:
                     return search.complited_message(state.plan_info, plan_list)
                 else:
-                    # ここには来ないはず
-                    return "Error"
+                    # 検索クエリの場合は必ずplan_listに値が入っている
+                    # よってここには到達しない
+                    return "Error: unreachable"
         else:
             if state.op == OP.Add:
                 return add.uncomplited_message(state.plan_info)
             if state.op == OP.Search:
-                return search.uncomplited_message()
+                return search.uncomplited_message(state.plan_info)
 
     return "無効な入力です"

@@ -9,7 +9,7 @@ src
 │
 ├── plan
 │   ├── add.py      : 追加操作
-│   ├── request.py  : ユーザーに対し入力要求を送る
+│   ├── date.py     : 日付情報の検証
 │   ├── main.py     : 入力情報処理
 │   ├── notif.py    : 通知処理
 │   └── search.py   : 検索操作

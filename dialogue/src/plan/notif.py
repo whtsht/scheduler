@@ -1,9 +1,6 @@
 from flask_apscheduler import APScheduler
 from datetime import datetime
 from linebot import LineBotApi
-from linebot.models import (
-    TextMessage,
-)
 from src.db_models import Plan
 from src.secret import CHANNEL_ACCESS_TOKEN
 
@@ -35,14 +32,17 @@ def cancal_notification(line_id: str, title: str, date: datetime):
     )
 
 
+# 利用者がスヌーズを押した場合，latest_planから最新の予定を取得し，5分後に通知する
 def snooze(line_id: str):
+    # TODO
     # 現在時刻から5分後の時刻を取得
     # add_notificationを使って通知設定する
     pass
 
 
 def send_notification(line_id: str, plan: Plan):
+    # TODO
     # Lineにメッセージを送信
-    line_bot_api.push_message(line_id, TextMessage(text="「" + plan.title + "」の時間です"))
-    # 予定名を記録
+
+    # 予定を記録
     latest_plan[line_id] = plan
