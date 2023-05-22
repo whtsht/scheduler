@@ -5,7 +5,6 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
 import Grid from "@mui/material/Grid";
 import { useEffect, useState } from "react";
-import { EventInput } from "@fullcalendar/core";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -17,15 +16,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopTimePicker } from "@mui/x-date-pickers/DesktopTimePicker";
 import dayjs from "dayjs";
 import CircleIcon from "@mui/icons-material/Circle";
-
-interface Plan {
-    title: string;
-    detail: string;
-    notif_time: Date;
-    allDay: boolean | null;
-    start: Date | null;
-    end: Date | null;
-}
+import { Plan, RawPlan, toPlan } from "../../plan";
+import { EventInput } from "@fullcalendar/core";
 
 function PlanDialog({
     open,
@@ -51,7 +43,7 @@ function PlanDialog({
     };
     const time = plan?.allDay ? (
         <DialogContent>
-            <h3>All Day</h3>
+            <h3>終日</h3>
         </DialogContent>
     ) : (
         <>
@@ -60,7 +52,14 @@ function PlanDialog({
         </>
     );
     return (
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog
+            open={open}
+            onClose={handleClose}
+            style={{
+                minHeight: "300px",
+                minWidth: "200px",
+            }}
+        >
             <DialogTitle>
                 <div
                     style={{
@@ -70,7 +69,7 @@ function PlanDialog({
                         gap: "10px",
                     }}
                 >
-                    <CircleIcon style={{ color: "red" }} />
+                    <CircleIcon style={{ color: "blue" }} />
                     {plan?.title}
                 </div>
             </DialogTitle>
@@ -89,15 +88,18 @@ function PlanDialog({
 }
 
 function LoggedIn() {
-    const INITIAL_EVENTS: EventInput[] = [
+    const events: RawPlan[] = [
         {
-            id: "id",
-            title: "資格試験",
+            id: "xxxxx",
+            title: "予定名",
             start: "2023-05-10T12:30:00",
             extendedProps: {
-                ditail: "ぬわー終わんねー",
+                lineID: "yyyyy",
+                detail: "詳細 ... ",
+                notifTime: "2023-05-10T12:20:00",
+                allDay: "2023-05-10T12:20:00",
+                end: "2023-05-10T12:20:00",
             },
-            color: "red",
         },
     ];
     useEffect(() => {
@@ -166,21 +168,23 @@ function LoggedIn() {
                             click: () => {},
                         },
                     }}
+                    viewDidMount={() => {
+                        const headerTitle = document.querySelector(
+                            ".fc-toolbar .fc-toolbar-title"
+                        ) as HTMLElement;
+                        headerTitle.addEventListener("click", function () {
+                            // Handle the onClick event here
+                            alert("Header title clicked");
+                        });
+                    }}
                     height="95vh"
                     contentHeight="95vh"
                     eventClick={(info) => {
-                        setPlan({
-                            title: info.event.title,
-                            detail: info.event.extendedProps.ditail,
-                            notif_time: info.event.extendedProps.notif_time,
-                            allDay: info.event.extendedProps.allDay,
-                            start: info.event.extendedProps.start,
-                            end: info.event.extendedProps.end,
-                        });
+                        setPlan(toPlan(info));
                         setOpen(true);
                     }}
                     initialView={"month"}
-                    initialEvents={INITIAL_EVENTS}
+                    initialEvents={events as EventInput[]}
                     locales={allLocales}
                     locale="ja"
                     titleFormat={{
