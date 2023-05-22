@@ -32,10 +32,11 @@ def cancal_notification(line_id: str, title: str, date: datetime):
     )
 
 
-# 利用者がスヌーズを押した場合，latest_planから最新の予定を取得し，5分後に通知する
+# 利用者がスヌーズを押した場合，latest_planから最新の予定を取得し，5/10/30/分後に通知する
+# その予定の開始時刻から30分以上経過している場合は，予定が古すぎることを知らせる
 def snooze(line_id: str):
     # TODO
-    # 現在時刻から5分後の時刻を取得
+    # 現在時刻から5/10/30分後の時刻を取得
     # add_notificationを使って通知設定する
     pass
 
@@ -43,6 +44,7 @@ def snooze(line_id: str):
 def send_notification(line_id: str, plan: Plan):
     # TODO
     # Lineにメッセージを送信
+    # 5/10/30分後に通知できるようにボタンを追加する
 
     # 予定を記録
     latest_plan[line_id] = plan
