@@ -43,13 +43,13 @@ function getPlanList(lineID: string): RawPlan[] {
 }
 
 // TODO
-function addPlan(lineID: string, plna: Plan) {}
+function addPlan(lineID: string, plna: Plan) { }
 
 // TODO
-function modifyPlan(lineID: string, planID: number, plan: Plan) {}
+function modifyPlan(lineID: string, planID: number, plan: Plan) { }
 
 // TODO
-function removePlan(planID: number) {}
+function removePlan(lineID: string, planID: number) { }
 
 export type { RawPlan, Plan };
 export { getPlanList, addPlan, modifyPlan, removePlan, toPlan };

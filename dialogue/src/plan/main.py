@@ -38,6 +38,7 @@ class UserState:
 states: dict[str, UserState] = {}
 
 
+# 利用者からの入力を受け取り，返答する
 def main(message: str, line_id: str) -> str:
     # 文字列 -> 入力情報
     input_info = get_input_info(message)

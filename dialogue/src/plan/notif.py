@@ -12,10 +12,12 @@ sched = APScheduler()
 latest_plan: dict[str, Plan] = {}
 
 
+# ジョブに対して唯一のIDを生成する
 def gen_id(line_id: str, title: str, date: datetime) -> str:
     return line_id + "_" + title + "_" + str(date)
 
 
+# 予定通知処理をジョブリストに追加
 def add_notification(line_id: str, plan: Plan):
     sched.add_job(
         gen_id(line_id, plan.title, plan.notif_time),
@@ -26,7 +28,8 @@ def add_notification(line_id: str, plan: Plan):
     )
 
 
-def cancal_notification(line_id: str, title: str, date: datetime):
+# ジョブリストから通知処理通知を削除
+def cancel_notification(line_id: str, title: str, date: datetime):
     sched.remove_job(
         gen_id(line_id, title, date),
     )
@@ -41,6 +44,7 @@ def snooze(line_id: str, after: int):
     pass
 
 
+# 利用者に予定の通知を行う
 def send_notification(line_id: str, plan: Plan):
     # TODO
     # Lineにメッセージを送信
