@@ -70,16 +70,10 @@ class OP(Enum):
         追加
     Search:
         検索
-    Remove:
-        削除
-    Snooze:
-        スヌーズ
     """
 
     Add = (1,)
     Search = (2,)
-    Remove = (4,)
-    Snooze = (5,)
 
 
 class PlanInfo:

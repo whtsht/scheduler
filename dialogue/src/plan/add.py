@@ -1,12 +1,8 @@
 from src.info import StrictDateTime, PlanInfo
 from src.db_models import db, Plan
 
-# 予定を追加するときは通知時間も記録する必要がある
-# なので開始時間を一旦ここに退避させる
-start_time_dict: dict[str, StrictDateTime] = {}
 
-
-# 予定名，開始時刻，通知時間が揃ったらデータベースに情報を追加してTrueを返す
+# 予定名，開始時刻が揃ったらデータベースに情報を追加してTrueを返す
 def from_message(line_id: str, plan_info: PlanInfo) -> bool:
     """入力文字列から予定を追加する"""
     return False
@@ -20,6 +16,7 @@ def add_plan(plan: Plan):
 
     # TODO
     # add_notificationを使って通知設定する
+    # 通知は開始時刻の30分前に設定する
 
 
 # どの情報が不足しているかを知らせる
