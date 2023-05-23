@@ -51,15 +51,6 @@ function Calendar({
                     click: () => {},
                 },
             }}
-            viewDidMount={() => {
-                const headerTitle = document.querySelector(
-                    ".fc-toolbar .fc-toolbar-title"
-                ) as HTMLElement;
-                headerTitle.addEventListener("click", function () {
-                    // Handle the onClick event here
-                    alert("Header title clicked");
-                });
-            }}
             height="90vh"
             contentHeight="90vh"
             eventClick={(info) => {
