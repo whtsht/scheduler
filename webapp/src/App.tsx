@@ -22,12 +22,12 @@ function isLoggedIn(): boolean {
 }
 
 function App() {
-    const Scene = isLoggedIn() ? <LoggedIn /> : <LoggedOut />;
+    const MainScreen = isLoggedIn() ? <LoggedIn /> : <LoggedOut />;
     const handle = useFullScreenHandle();
 
     return (
         <FullScreen handle={handle}>
-            <CssBaseline>{Scene}</CssBaseline>
+            <CssBaseline>{MainScreen}</CssBaseline>
         </FullScreen>
     );
 }

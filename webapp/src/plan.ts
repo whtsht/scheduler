@@ -16,10 +16,10 @@ interface ExtendedProps {
 }
 
 interface Plan {
-    plan_id: string;
+    id: string;
     title: string;
     detail: string;
-    notif_time: string;
+    notifTime: string;
     allDay: string | null;
     start: string | null;
     end: string | null;
@@ -27,10 +27,10 @@ interface Plan {
 
 function toPlan(info: EventClickArg): Plan {
     return {
-        plan_id: info.event.id,
+        id: info.event.id,
         title: info.event.title,
         detail: info.event.extendedProps.detail,
-        notif_time: info.event.extendedProps.notif_time,
+        notifTime: info.event.extendedProps.notif_time,
         allDay: info.event.extendedProps.allDay,
         start: info.event.extendedProps.start,
         end: info.event.extendedProps.end,
@@ -39,7 +39,7 @@ function toPlan(info: EventClickArg): Plan {
 
 function toEventInput(plan: Plan): EventInput {
     return {
-        id: plan.plan_id,
+        id: plan.id,
         title: plan.title,
     };
 }
