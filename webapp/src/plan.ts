@@ -45,18 +45,24 @@ function toEventInput(plan: Plan): EventInput {
 }
 
 // TODO
-function getPlanList(lineID: string): Plan[] {
+function getPlanList(lineID: string): Plan[] | undefined {
     return [];
 }
 
 // TODO
-function addPlan(lineID: string, plna: Plan) {}
+function addPlan(lineID: string, plna: Plan): boolean {
+    return false;
+}
 
 // TODO
-function modifyPlan(lineID: string, planID: number, plan: Plan) {}
+function modifyPlan(lineID: string, planID: number, plan: Plan): boolean {
+    return false;
+}
 
 // TODO
-function removePlan(lineID: string, planID: number) {}
+function removePlan(lineID: string, planID: number): boolean {
+    return false;
+}
 
 export type { RawPlan, Plan };
 export { getPlanList, addPlan, modifyPlan, removePlan, toPlan, toEventInput };
