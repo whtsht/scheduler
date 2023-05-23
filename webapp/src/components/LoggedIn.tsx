@@ -1,6 +1,6 @@
 import Grid from "@mui/material/Grid";
 import { useEffect, useState } from "react";
-import PlanDialog from "./PlanDialog";
+import PlanShowDialog from "./PlanShowDialog";
 import { Plan, RawPlan } from "../plan";
 import Calendar from "./Calendar";
 import { EventInput } from "@fullcalendar/core";
@@ -47,7 +47,7 @@ function LoggedIn() {
                     minWidth: "100vw",
                 }}
             >
-                <PlanDialog
+                <PlanShowDialog
                     open={open}
                     handleClose={() => setOpen(false)}
                     plan={plan}

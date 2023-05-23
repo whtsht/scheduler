@@ -60,8 +60,8 @@ function Calendar({
                     alert("Header title clicked");
                 });
             }}
-            height="95vh"
-            contentHeight="95vh"
+            height="90vh"
+            contentHeight="90vh"
             eventClick={(info) => {
                 setPlan(toPlan(info));
                 openHandle();

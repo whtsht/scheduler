@@ -104,8 +104,7 @@ function TimeContent({ title, time }: { title: string; time: string }) {
                 style={{
                     display: "flex",
                     justifyContent: "space-around",
-                    margin: "20px 0px",
-                    gap: "40px",
+                    gap: "20px",
                 }}
             >
                 <div style={{ width: "70px" }}>
