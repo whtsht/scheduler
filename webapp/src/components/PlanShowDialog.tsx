@@ -13,11 +13,11 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 function PlanShowDialog({
     open,
-    handleClose,
+    closeHandle,
     plan,
 }: {
     open: boolean;
-    handleClose: () => void;
+    closeHandle: () => void;
     plan: Plan | null;
 }) {
     const TimeContents = plan?.allDay ? (
@@ -36,13 +36,13 @@ function PlanShowDialog({
     return (
         <Dialog
             open={open}
-            onClose={handleClose}
+            onClose={closeHandle}
             aria-labelledby="responsive-dialog-title"
         >
             <TitleContent title={plan?.title} />
             <DetailContent detail={plan?.detail} />
             {TimeContents}
-            <ActionContent handleClose={handleClose} />
+            <ActionContent handleClose={closeHandle} />
         </Dialog>
     );
 }

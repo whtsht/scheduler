@@ -1,4 +1,4 @@
-import { EventClickArg } from "@fullcalendar/core";
+import { EventClickArg, EventInput } from "@fullcalendar/core";
 
 interface RawPlan {
     id: string;
@@ -37,19 +37,26 @@ function toPlan(info: EventClickArg): Plan {
     };
 }
 
+function toEventInput(plan: Plan): EventInput {
+    return {
+        id: plan.plan_id,
+        title: plan.title,
+    };
+}
+
 // TODO
-function getPlanList(lineID: string): RawPlan[] {
+function getPlanList(lineID: string): Plan[] {
     return [];
 }
 
 // TODO
-function addPlan(lineID: string, plna: Plan) { }
+function addPlan(lineID: string, plna: Plan) {}
 
 // TODO
-function modifyPlan(lineID: string, planID: number, plan: Plan) { }
+function modifyPlan(lineID: string, planID: number, plan: Plan) {}
 
 // TODO
-function removePlan(lineID: string, planID: number) { }
+function removePlan(lineID: string, planID: number) {}
 
 export type { RawPlan, Plan };
-export { getPlanList, addPlan, modifyPlan, removePlan, toPlan };
+export { getPlanList, addPlan, modifyPlan, removePlan, toPlan, toEventInput };

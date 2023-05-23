@@ -4,15 +4,15 @@ import allLocales from "@fullcalendar/core/locales-all";
 import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
-import { toPlan, Plan } from "../plan";
+import { toPlan, Plan, toEventInput } from "../plan";
 import { useEffect } from "react";
 
 function Calendar({
-    events,
+    planList,
     setPlan,
     openHandle,
 }: {
-    events: EventInput[];
+    planList: Plan[];
     setPlan: (plan: Plan) => void;
     openHandle: () => void;
 }) {
@@ -67,7 +67,7 @@ function Calendar({
                 openHandle();
             }}
             initialView={"month"}
-            initialEvents={events as EventInput[]}
+            initialEvents={planList.map(toEventInput)}
             locales={allLocales}
             locale="ja"
             titleFormat={{
