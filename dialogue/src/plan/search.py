@@ -10,6 +10,7 @@ def from_message(line_id: str, plan_info: PlanInfo) -> list[Plan]:
 
 
 # 検索情報が不足することを知らせる
+# 検索が失敗したことも伝える
 def uncomplited_message(plan_info: PlanInfo) -> str:
     return ""
 

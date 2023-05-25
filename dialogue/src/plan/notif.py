@@ -20,10 +20,10 @@ def gen_id(line_id: str, title: str, date: datetime) -> str:
 # 予定通知処理をジョブリストに追加
 def add_notification(line_id: str, plan: Plan):
     sched.add_job(
-        gen_id(line_id, plan.title, plan.notif_time),
+        gen_id(line_id, plan.title, plan.start_time),
         send_notification,
         trigger="date",
-        run_date=plan.date,
+        run_date=plan.notif_time,
         args=[line_id, plan],
     )
 
@@ -41,6 +41,7 @@ def snooze(line_id: str, after: int):
     # TODO
     # 現在時刻からafter分後の時刻を取得
     # add_notificationを使って通知設定する
+    plan = latest_plan[line_id]
     pass
 
 
