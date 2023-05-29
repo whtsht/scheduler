@@ -19,8 +19,10 @@ def gen_id(line_id: str, title: str, date: datetime) -> str:
 
 # 予定通知処理をジョブリストに追加
 def add_notification(line_id: str, plan: Plan):
+    # start_timeかalldayのどちらか必ず値が入っている
+    start_time = plan.start_time or plan.allday
     sched.add_job(
-        gen_id(line_id, plan.title, plan.start_time),
+        gen_id(line_id, plan.title, start_time),  # type: ignore
         send_notification,
         trigger="date",
         run_date=plan.notif_time,

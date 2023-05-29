@@ -8,6 +8,8 @@ def from_message(line_id: str, plan_info: PlanInfo) -> bool:
     # TODO
     # add_notificationを使って通知設定する
     # 通知は開始時刻の30分前に設定する
+    # title = plan_info.title
+    # start_time = plan.start_time or plan.allday
     # titleとstart_timeがかぶってたら失敗
     return False
 

@@ -10,8 +10,6 @@ def operation_from_str(s: Optional[str]) -> Optional[OP]:
         return OP.Search
     if s == "Add":
         return OP.Add
-    if s == "Remove":
-        return OP.Remove
 
     return None
 
