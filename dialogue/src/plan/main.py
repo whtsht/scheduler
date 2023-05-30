@@ -77,8 +77,8 @@ def integrate_input(line_id: str, input_info: InputInfo) -> InputInfo:
 # 利用者の状態に応じてメッセージを生成
 # 動作が完了しているならばstatesから削除
 def gen_message(line_id) -> str:
-    state = states[line_id]
-    if state := state:
+    if line_id in states:
+        state = states[line_id]
         if state.completed:
             states.pop(line_id)
 
