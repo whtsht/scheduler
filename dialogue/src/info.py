@@ -1,3 +1,8 @@
+"""
+Designer:
+Date:
+Purpose:
+"""
 from typing import Optional
 from datetime import datetime
 from enum import Enum
@@ -119,3 +124,8 @@ class InputInfo:
             PlanInfo: 予定情報
         """
         return PlanInfo(self.title, self.start_time)
+
+
+def a():
+    """_summary_"""
+    pass

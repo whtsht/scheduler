@@ -1,3 +1,8 @@
+/**
+ * Designer    : <製作者>
+ * Date        : <日付>
+ * Purpose     : <目的>
+ */
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
